@@ -1,11 +1,13 @@
 {
   "version": "0.1.0",
   "scripts": {
-    "start": "gulp"
+    "watch-markdown": "gulp",
+    "start": "concurrently \"dotnet run -p src/Umbraco.Docs.Preview.UI\" \"npm:watch-markdown\" --names dotnet,gulp"
   },
   "dependencies": {
     "axios": "^0.24.0",
     "browser-sync": "^2.27.7",
+    "concurrently": "^6.4.0",
     "gulp": "^4.0.2"
   }
 }

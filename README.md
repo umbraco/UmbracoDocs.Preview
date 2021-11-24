@@ -11,17 +11,16 @@ setting up our.umbraco.
 Be warned this project is somewhat experimental and definitely has some limitations, it's unlikely to ever gain any
 sort of official support.
 
-## Getting started
+## Getting setup
 
-Clone this repo then initialize submodules (UmbracoDocs)
+We need to UmbracoDocs markdown & images, run the following to initialize the UmbracoDocs submodule.
 
 ```bash
 $ git submodule init # from repo root
 $ git submodule update
-$ dotnet run -p ./src/umbraco.Docs.Preview.UI # server now running on http://localhost:5000
 ```
 
-## Watching markdown files
+## Running the project
 
 Optional but recommended when editing.
 
@@ -30,7 +29,9 @@ $ npm ci # from repo root
 $ npm start # proxy server now running on http://localhost:5001
 ```
 
-And you're ready to view the docs by default at http://localhost:5000 or via the proxy (auto reloads changes) a http://localhost:5001
+And you're ready to view the docs by default at http://localhost:5001.
+
+When you update a markdown document your browser will automatically reload.
 
 This could be useful for testing contributions to UmbracoDocs or just to facilitate reading the docs without an internet
 connection.
