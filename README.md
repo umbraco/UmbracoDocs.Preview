@@ -16,12 +16,9 @@ sort of official support.
 Clone this repo then initialize submodules (UmbracoDocs)
 
 ```bash
-# from repo root
-
-$ git submodule init
+$ git submodule init # from repo root
 $ git submodule update
-$ dotnet run -p ./src/umbraco.Docs.Preview.UI
-# server now running on http://localhost:5000
+$ dotnet run -p ./src/umbraco.Docs.Preview.UI # server now running on http://localhost:5000
 ```
 
 ## Watching markdown files
@@ -29,10 +26,8 @@ $ dotnet run -p ./src/umbraco.Docs.Preview.UI
 Optional but recommended when editing.
 
 ```bash 
-# from repo root
-$ npm ci
-$ npm start
-# proxy server now running on http://localhost:5001
+$ npm ci # from repo root
+$ npm start # proxy server now running on http://localhost:5001
 ```
 
 And you're ready to view the docs by default at http://localhost:5000 or via the proxy (auto reloads changes) a http://localhost:5001
