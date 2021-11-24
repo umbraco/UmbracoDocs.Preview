@@ -32,7 +32,7 @@ namespace Umbraco.Docs.Preview.UI.Options
 
             while (directory != null)
             {
-                var testPath = Path.Combine(directory.ToString(), "submodules", "UmbracoDocs");
+                var testPath = Path.Combine(directory.ToString(), "UmbracoDocs");
 
                 if (Directory.Exists(testPath))
                 {

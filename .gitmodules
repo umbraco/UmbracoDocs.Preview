@@ -1,3 +1,3 @@
 [submodule "submodules/UmbracoDocs"]
-	path = submodules/UmbracoDocs
+	path = UmbracoDocs
 	url = https://github.com/umbraco/UmbracoDocs.git
