@@ -26,6 +26,7 @@ namespace Umbraco.Docs.Preview.UI.Models
             RelativePathSegments = new Uri(Path.GetDirectoryName(FileSystemPath)!)
                 .Segments
                 .Skip(new Uri(root).Segments.Length)
+                .Select(x => x.Trim('/'))
                 .ToArray();
         }
 
@@ -35,6 +36,7 @@ namespace Umbraco.Docs.Preview.UI.Models
             RelativePathSegments = new Uri(Path.GetDirectoryName(FileSystemPath)!)
                 .Segments
                 .Skip(new Uri(root).Segments.Length)
+                .Select(x => x.Trim('/'))
                 .ToArray();
         }
         
