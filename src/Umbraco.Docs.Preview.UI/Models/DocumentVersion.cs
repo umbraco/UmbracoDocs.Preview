@@ -6,7 +6,7 @@ using Umbraco.Docs.Preview.UI.Extensions;
 
 namespace Umbraco.Docs.Preview.UI.Models
 {
-    public class DocumentationVersion
+    public class DocumentVersion
     {
         public string FileSystemPath { get; set; }
 
@@ -16,23 +16,15 @@ namespace Umbraco.Docs.Preview.UI.Models
         public string FileName => Path.GetFileName(FileSystemPath);
         public string FileNameWithoutExtension => Path.GetFileNameWithoutExtension(FileSystemPath);
         public bool IsAlternate => FileName.Contains("v-pre") || Regex.IsMatch(FileName, @"-v\d+");
-
         public string Url => IsAlternate ? $"{FolderRelativeUrl}{FileNameWithoutExtension}" : FolderRelativeUrl;
 
 
-        public DocumentationVersion(string root, string filename)
+        public DocumentVersion(string root, string filename, params string[] parts)
         {
-            FileSystemPath = Path.Combine(root, filename);
-            RelativePathSegments = new Uri(Path.GetDirectoryName(FileSystemPath)!)
-                .Segments
-                .Skip(new Uri(root).Segments.Length)
-                .Select(x => x.Trim('/'))
-                .ToArray();
-        }
+            FileSystemPath = parts.Any()
+                ? Path.Combine(root, Path.Combine(parts), filename)
+                : Path.Combine(root, filename);
 
-        public DocumentationVersion(string root, string filename, params string[] parts)
-        {
-            FileSystemPath = Path.Combine(root, Path.Combine(parts), filename);
             RelativePathSegments = new Uri(Path.GetDirectoryName(FileSystemPath)!)
                 .Segments
                 .Skip(new Uri(root).Segments.Length)

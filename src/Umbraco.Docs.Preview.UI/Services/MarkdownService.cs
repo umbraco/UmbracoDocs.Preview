@@ -12,7 +12,7 @@ namespace Umbraco.Docs.Preview.UI.Services
     {
         public const string RegEx = @"\[([^\]]+)\]\(([^)]+)\)"; // wat?
 
-        public string RenderMarkdown(DocumentationVersion version)
+        public string RenderMarkdown(DocumentVersion version)
         {
             var rawMarkdown = File.ReadAllText(version.FileSystemPath);
 
@@ -53,7 +53,7 @@ namespace Umbraco.Docs.Preview.UI.Services
             return transform;
         }
 
-        private string LinkEvaluator(Match match, DocumentationVersion version)
+        private string LinkEvaluator(Match match, DocumentVersion version)
         {
             string mdUrlTag = match.Groups[0].Value;
             string linkText = match.Groups[1].Value;

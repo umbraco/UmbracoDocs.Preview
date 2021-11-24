@@ -4,19 +4,19 @@ namespace Umbraco.Docs.Preview.UI.Models
 {
     public class DocumentationViewModel
     {
-        public DocumentationVersion Version { get; init; }
+        public DocumentVersion DocumentVersion { get; init; }
         public string Markup { get; init; }
         public UmbracoDocsTreeNode Navigation { get; init; }
-        public List<DocumentationVersion> Alternates { get; init; }
+        public List<DocumentVersion> Alternates { get; init; }
 
-        public bool IsCurrent(DocumentationVersion alternate)
+        public bool IsCurrent(DocumentVersion alternate)
         {
-            return Version.FileSystemPath.Equals(alternate.FileSystemPath);
+            return DocumentVersion.FileSystemPath.Equals(alternate.FileSystemPath);
         }
 
         public override string ToString()
         {
-            return Version.ToString();
+            return DocumentVersion.ToString();
         }
     }
 }

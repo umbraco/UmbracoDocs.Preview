@@ -5,8 +5,8 @@ namespace Umbraco.Docs.Preview.UI.Services
 {
     public interface IDocumentService
     {
-        bool TryFindMarkdownFile(string slug, out DocumentationVersion version);
-        IEnumerable<DocumentationVersion> GetAlternates(DocumentationVersion version);
+        bool TryFindMarkdownFile(string slug, out DocumentVersion version);
+        IEnumerable<DocumentVersion> GetAlternates(DocumentVersion version);
         public UmbracoDocsTreeNode GetDocsTree();
     }
 }

@@ -33,7 +33,7 @@ namespace Umbraco.Docs.Preview.UI.Controllers
 
             var model = new DocumentationViewModel
             {
-                Version = version,
+                DocumentVersion = version,
                 Navigation = _docs.GetDocsTree(),
                 Alternates = _docs.GetAlternates(version).ToList(),
                 Markup = _md.RenderMarkdown(version),

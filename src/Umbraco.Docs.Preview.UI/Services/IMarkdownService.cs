@@ -4,6 +4,6 @@ namespace Umbraco.Docs.Preview.UI.Services
 {
     public interface IMarkdownService
     {
-        string RenderMarkdown(DocumentationVersion version);
+        string RenderMarkdown(DocumentVersion version);
     }
 }

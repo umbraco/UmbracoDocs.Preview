@@ -22,11 +22,11 @@ namespace Umbraco.Docs.Preview.UI.Services
 
         public string DocsRoot => _umbracoDocsOptions.Value.UmbracoDocsRootFolder;
 
-        public bool TryFindMarkdownFile(string slug, out DocumentationVersion version)
+        public bool TryFindMarkdownFile(string slug, out DocumentVersion version)
         {
             if (slug == null)
             {
-                version = new DocumentationVersion(DocsRoot, "index.md");
+                version = new DocumentVersion(DocsRoot, "index.md");
                 return File.Exists(version.FileSystemPath);
             }
 
@@ -35,13 +35,13 @@ namespace Umbraco.Docs.Preview.UI.Services
                 .ToArray();
 
 
-            version = new DocumentationVersion(DocsRoot, $"{slugParts.Last()}.md", slugParts.SkipLast(1).ToArray());
+            version = new DocumentVersion(DocsRoot, $"{slugParts.Last()}.md", slugParts.SkipLast(1).ToArray());
             if (File.Exists(version.FileSystemPath))
             {
                 return true;
             }
 
-            version = new DocumentationVersion(DocsRoot, "index.md", slugParts);
+            version = new DocumentVersion(DocsRoot, "index.md", slugParts);
             if (File.Exists(version.FileSystemPath))
             {
                 return true;
@@ -51,7 +51,7 @@ namespace Umbraco.Docs.Preview.UI.Services
             return false;
         }
 
-        public IEnumerable<DocumentationVersion> GetAlternates(DocumentationVersion version)
+        public IEnumerable<DocumentVersion> GetAlternates(DocumentVersion version)
         {
             // TODO: parse version numbers, might not even be worth it.
 
@@ -64,7 +64,8 @@ namespace Umbraco.Docs.Preview.UI.Services
 
                     return alt.StartsWith(unVersioned);
                 })
-                .Select(x => new DocumentationVersion(DocsRoot, Path.GetFileName(x), version.RelativePathSegments));
+                .Select(x => new DocumentVersion(DocsRoot, Path.GetFileName(x), version.RelativePathSegments))
+                .OrderByDescending(x => x.FileName);
         }
 
         public UmbracoDocsTreeNode GetDocsTree()
