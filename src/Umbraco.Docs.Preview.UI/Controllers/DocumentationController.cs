@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 using Umbraco.Docs.Preview.UI.Models;
 using Umbraco.Docs.Preview.UI.Services;
 
@@ -9,13 +11,21 @@ namespace Umbraco.Docs.Preview.UI.Controllers
     [Route("documentation")]
     public class DocumentationController : Controller
     {
+        private readonly ILogger<DocumentationController> _log;
         private readonly IDocumentService _docs;
         private readonly IMarkdownService _md;
+        private readonly IMemoryCache _memoryCache;
 
-        public DocumentationController(IDocumentService docs, IMarkdownService md)
+        public DocumentationController(
+            ILogger<DocumentationController> log,
+            IDocumentService docs,
+            IMarkdownService md,
+            IMemoryCache memoryCache)
         {
+            _log = log;
             _docs = docs;
             _md = md;
+            _memoryCache = memoryCache;
         }
 
         [HttpGet("{**slug}")]
@@ -40,6 +50,14 @@ namespace Umbraco.Docs.Preview.UI.Controllers
             };
 
             return View("DocumentationSubpage", model);
+        }
+
+        [HttpDelete("caches")]
+        public IActionResult InvalidateCaches()
+        {
+            _log.LogInformation("Clearing documentation caches");
+            _memoryCache.Remove(nameof(_docs.GetDocsTree));
+            return NoContent();
         }
     }
 }
