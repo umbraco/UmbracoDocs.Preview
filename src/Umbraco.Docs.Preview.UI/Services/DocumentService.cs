@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.Extensions.Options;
-using Umbraco.Docs.Preview.UI.Interceptors.Caching;
 using Umbraco.Docs.Preview.UI.MiscellaneousOurStuff;
 using Umbraco.Docs.Preview.UI.Models;
 using Umbraco.Docs.Preview.UI.Options;

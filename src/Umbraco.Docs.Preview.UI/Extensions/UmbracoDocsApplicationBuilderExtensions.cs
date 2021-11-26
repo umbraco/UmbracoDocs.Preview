@@ -8,7 +8,7 @@ using Umbraco.Docs.Preview.UI.Models;
 
 namespace Umbraco.Docs.Preview.UI.Extensions
 {
-    public static class UmbracoDocsImagesApplicationBuilderExtensions
+    public static class UmbracoDocsApplicationBuilderExtensions
     {
         public static IApplicationBuilder UseUmbracoDocsImageFileProviders(this IApplicationBuilder app)
         {
@@ -18,7 +18,7 @@ namespace Umbraco.Docs.Preview.UI.Extensions
 
             var log = serviceProvider
                 .GetRequiredService<ILoggerFactory>()
-                .CreateLogger(typeof(UmbracoDocsImagesApplicationBuilderExtensions));
+                .CreateLogger(typeof(UmbracoDocsApplicationBuilderExtensions));
 
             log.LogWarning("Images from new documentation sub directories will not be served without a restart");
 
@@ -30,7 +30,9 @@ namespace Umbraco.Docs.Preview.UI.Extensions
         private static void AddImageFileProviders(UmbracoDocsTreeNode node, IApplicationBuilder app, ILogger log)
         {
             var path = Path.Combine(node.PhysicalPath, "images");
-            var requestPath = $"/documentation/{node.Path}/images".Replace("//", "/"); // Hack for root UmbracoDocs folder
+
+            var requestPath = $"/documentation/{node.Path}/images"
+                .Replace("//", "/"); // Hack for root UmbracoDocs folder
 
             if (Directory.Exists(path))
             {
@@ -47,6 +49,16 @@ namespace Umbraco.Docs.Preview.UI.Extensions
             {
                 AddImageFileProviders(child, app, log);
             }
+        }
+
+        public static IApplicationBuilder UseOurUmbracoEmbeddedResources(this IApplicationBuilder app)
+        {
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new ManifestEmbeddedFileProvider(typeof(Program).Assembly, "wwwroot"),
+                RequestPath = ""
+            });
+            return app;
         }
     }
 }

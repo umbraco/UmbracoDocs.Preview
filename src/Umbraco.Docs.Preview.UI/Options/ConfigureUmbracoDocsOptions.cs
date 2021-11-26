@@ -1,7 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Umbraco.Docs.Preview.UI.Options
@@ -10,39 +10,29 @@ namespace Umbraco.Docs.Preview.UI.Options
     {
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _env;
+        private readonly ILogger<ConfigureUmbracoDocsOptions> _log;
 
-        public ConfigureUmbracoDocsOptions(IConfiguration configuration, IWebHostEnvironment env)
+        public ConfigureUmbracoDocsOptions(
+            IConfiguration configuration,
+            IWebHostEnvironment env,
+            ILogger<ConfigureUmbracoDocsOptions> log)
         {
             _configuration = configuration;
             _env = env;
+            _log = log;
         }
 
         public void Configure(UmbracoDocsOptions options)
         {
-            var configuredPath = _configuration.GetValue<string>("UmbracoDocs:RepositoryDirectory");
-
-            options.UmbracoDocsRootFolder = string.IsNullOrEmpty(configuredPath)
-                ? FindUmbracoDocsSubmoduleDirectory()
-                : configuredPath;
-        }
-
-        private string FindUmbracoDocsSubmoduleDirectory()
-        {
-            var directory = new DirectoryInfo(_env.WebRootPath);
-
-            while (directory != null)
+            var directory = Directory.GetCurrentDirectory();
+            
+            if (!File.Exists(Path.Combine(directory, "index.md")))
             {
-                var testPath = Path.Combine(directory.ToString(), "UmbracoDocs");
-
-                if (Directory.Exists(testPath))
-                {
-                    return testPath;
-                }
-
-                directory = directory.Parent;
+                _log.LogCritical("{dir} directory doesn't appear to be the UmbracoDocs repo.", directory);
+                return;
             }
 
-            throw new ApplicationException("Couldn't find UmbracoDocs directory, did you forget to $ git submodule init/update ?");
+            options.UmbracoDocsRootFolder = directory;
         }
     }
 }
