@@ -2,9 +2,11 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Umbraco.Docs.Preview.UI.Messaging.Notifications.DocumentationUpdated;
 using Umbraco.Docs.Preview.UI.Options;
 
 namespace Umbraco.Docs.Preview.UI.HostedServices
@@ -13,15 +15,18 @@ namespace Umbraco.Docs.Preview.UI.HostedServices
     {
         private readonly ILogger<DocumentationFolderMonitor> _log;
         private readonly IOptions<UmbracoDocsOptions> _options;
+        private readonly IMediator _mediator;
 
         private FileSystemWatcher _watcher;
 
         public DocumentationFolderMonitor(
             ILogger<DocumentationFolderMonitor> log,
-            IOptions<UmbracoDocsOptions> options)
+            IOptions<UmbracoDocsOptions> options,
+            IMediator mediator)
         {
             _log = log;
             _options = options;
+            _mediator = mediator;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -38,7 +43,9 @@ namespace Umbraco.Docs.Preview.UI.HostedServices
 
         private void OnChange(object sender, FileSystemEventArgs args)
         {
-            _log.LogInformation("Documentation changed, reloading UI", args.Name);
+            // TODO: Debounce
+            _log.LogDebug("{name} changed.", args.Name);
+            Task.Run(async () => await _mediator.Publish(new DocsUpdated())).GetAwaiter().GetResult();
         }
 
         private void OnError(object sender, ErrorEventArgs args)

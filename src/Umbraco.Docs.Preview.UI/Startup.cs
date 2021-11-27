@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
 using Lamar;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -40,6 +41,8 @@ namespace Umbraco.Docs.Preview.UI
                 });
 
             services.AddHostedService<DocumentationFolderMonitor>();
+
+            services.AddMediatR(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
