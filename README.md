@@ -18,18 +18,18 @@ TODO: this
 
 ```bash
 $ dotnet pack -o dist
-$ dotnet tool install -g --add-source ./dist --version 0.1.0-beta Umbraco.Docs.Preview.UI
+$ dotnet tool install -g --add-source ./dist --version 0.1.0-beta Umbraco.Docs.Preview.App
 ```
 
 ## Running the project
 
 ```bash
-$ udpa # run from UmbracoDocs repo root
+$ umbracodocs # run from UmbracoDocs repo root
 ```
 
 ## I don't want this anymore
 ```bash
-$ dotnet tool uninstall -g umbraco.docs.preview.ui
+$ dotnet tool uninstall -g umbraco.docs.preview.app
 ```
 
 And you're ready to view the docs by default at http://localhost:5000.
