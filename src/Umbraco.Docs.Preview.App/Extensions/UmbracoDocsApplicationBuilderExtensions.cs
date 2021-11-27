@@ -20,15 +20,17 @@ namespace Umbraco.Docs.Preview.App.Extensions
                 .GetRequiredService<ILoggerFactory>()
                 .CreateLogger(typeof(UmbracoDocsApplicationBuilderExtensions));
 
-            log.LogWarning("Images from new documentation sub directories will not be served without a restart");
+            var total = AddImageFileProviders(tree, app, log);
+            log.LogInformation("Found {count} image directories for UmbracoDocs", total);
 
-            AddImageFileProviders(tree, app, log);
+            log.LogWarning("Images from new documentation sub directories will not be served without a restart");
 
             return app;
         }
 
-        private static void AddImageFileProviders(UmbracoDocsTreeNode node, IApplicationBuilder app, ILogger log)
+        private static int AddImageFileProviders(UmbracoDocsTreeNode node, IApplicationBuilder app, ILogger log)
         {
+            var counter = 0;
             var path = Path.Combine(node.PhysicalPath, "images");
 
             var requestPath = $"/documentation/{node.Path}/images"
@@ -43,22 +45,17 @@ namespace Umbraco.Docs.Preview.App.Extensions
                     FileProvider = new PhysicalFileProvider(path),
                     RequestPath = requestPath
                 });
+
+                ++counter;
             }
 
+            // Could add these to a composite?
             foreach (var child in node.Directories)
             {
-                AddImageFileProviders(child, app, log);
+                counter += AddImageFileProviders(child, app, log);
             }
-        }
 
-        public static IApplicationBuilder UseOurUmbracoEmbeddedResources(this IApplicationBuilder app)
-        {
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new ManifestEmbeddedFileProvider(typeof(Program).Assembly, "wwwroot"),
-                RequestPath = ""
-            });
-            return app;
+            return counter;
         }
     }
 }

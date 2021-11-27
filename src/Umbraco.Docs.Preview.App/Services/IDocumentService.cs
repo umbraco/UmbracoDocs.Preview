@@ -7,6 +7,7 @@ namespace Umbraco.Docs.Preview.App.Services
     public interface IDocumentService
     {
         bool TryFindMarkdownFile(string slug, out DocumentVersion version);
+
         IEnumerable<DocumentVersion> GetAlternates(DocumentVersion version);
 
         [CacheIndefinitely(CacheKey = nameof(GetDocsTree))]
