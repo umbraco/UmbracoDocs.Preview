@@ -20,7 +20,7 @@ This project can be found on nuget at https://www.nuget.org/packages/Umbraco.Doc
 You can run the following to install as a global tool.
 
 ```bash
-$ dotnet tool install --global Umbraco.Docs.Preview.App --version 0.1.0-beta
+$ dotnet tool install --global Umbraco.Docs.Preview.App
 ```
 
 ## Running the project
@@ -37,14 +37,14 @@ This could be useful for testing contributions to UmbracoDocs or just to facilit
 connection.
 
 
-## install local build
+## Install local build
 
 ```bash
 $ dotnet pack -o dist
-$ dotnet tool install -g --add-source ./dist --version 0.1.0-beta Umbraco.Docs.Preview.App
+$ dotnet tool install -g --add-source ./dist Umbraco.Docs.Preview.App
 ```
 
-## I don't want this anymore
+## Uninstall
 ```bash
 $ dotnet tool uninstall -g umbraco.docs.preview.app
 ```
