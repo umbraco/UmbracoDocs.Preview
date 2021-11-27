@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Umbraco.Docs.Preview.UI.Extensions;
+using Umbraco.Docs.Preview.UI.HostedServices;
 using Umbraco.Docs.Preview.UI.Interceptors.Caching;
 using Umbraco.Docs.Preview.UI.MiscellaneousOurStuff;
 using Umbraco.Docs.Preview.UI.Options;
@@ -37,6 +38,8 @@ namespace Umbraco.Docs.Preview.UI
                     return new ProxyGenerator()
                         .CreateInterfaceProxyWithTarget(target, caching);
                 });
+
+            services.AddHostedService<DocumentationFolderMonitor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
