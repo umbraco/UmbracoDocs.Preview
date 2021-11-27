@@ -41,6 +41,7 @@ namespace Umbraco.Docs.Preview.UI
                 });
 
             services.AddHostedService<DocumentationFolderMonitor>();
+            services.AddTransient<IDocumentationChangeNotifier, DocumentationChangeNotifier>();
 
             services.AddMediatR(typeof(Startup));
         }

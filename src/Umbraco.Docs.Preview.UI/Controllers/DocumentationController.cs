@@ -1,27 +1,36 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Umbraco.Docs.Preview.UI.Models;
 using Umbraco.Docs.Preview.UI.Services;
-
 
 namespace Umbraco.Docs.Preview.UI.Controllers
 {
     [Route("documentation")]
     public class DocumentationController : Controller
     {
-        private readonly ILogger<DocumentationController> _log;
         private readonly IDocumentService _docs;
         private readonly IMarkdownService _md;
+        private readonly IDocumentationChangeNotifier _documentationChangeNotifier;
 
         public DocumentationController(
-            ILogger<DocumentationController> log,
             IDocumentService docs,
-            IMarkdownService md)
+            IMarkdownService md,
+            IDocumentationChangeNotifier documentationChangeNotifier)
         {
-            _log = log;
             _docs = docs;
             _md = md;
+            _documentationChangeNotifier = documentationChangeNotifier;
+        }
+
+        [HttpGet("should-reload")]
+        public async Task<IActionResult> ShouldReload()
+        {
+            var reload = await _documentationChangeNotifier.WaitForChanges();
+
+            return reload
+                ? Ok()
+                : Accepted();
         }
 
         [HttpGet("{**slug}")]
@@ -47,5 +56,6 @@ namespace Umbraco.Docs.Preview.UI.Controllers
 
             return View("DocumentationSubpage", model);
         }
+
     }
 }
