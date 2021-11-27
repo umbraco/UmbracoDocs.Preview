@@ -34,7 +34,7 @@ $ dotnet tool uninstall -g umbraco.docs.preview.ui
 
 And you're ready to view the docs by default at http://localhost:5000.
 
-TODO: When you update a markdown document your browser will automatically reload.
+When you update a markdown document your browser will automatically reload.
 
 This could be useful for testing contributions to UmbracoDocs or just to facilitate reading the docs without an internet
 connection.
