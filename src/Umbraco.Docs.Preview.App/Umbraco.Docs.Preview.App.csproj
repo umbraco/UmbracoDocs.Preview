@@ -15,21 +15,13 @@
         <PackAsTool>true</PackAsTool>
         <ToolCommandName>umbracodocs</ToolCommandName>
     </PropertyGroup>
-
-    <PropertyGroup>
-        <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
-    </PropertyGroup>
     
     <ItemGroup>
         <PackageReference Include="Castle.Core" Version="4.4.1" />
         <PackageReference Include="Lamar.Microsoft.DependencyInjection" Version="6.0.0" />
         <PackageReference Include="Markdig" Version="0.26.0" />
         <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
-        <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="3.1.0" />
         <!--<PackageReference Include="Markdig.SyntaxHighlighting" Version="1.1.7" />--> <!--Windows only-->
     </ItemGroup>
 
-    <ItemGroup>
-        <EmbeddedResource Include="wwwroot/**/*" />
-    </ItemGroup>
 </Project>

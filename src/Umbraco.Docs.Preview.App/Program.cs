@@ -1,39 +1,48 @@
+using System;
+using System.IO;
+using System.Reflection;
 using Lamar.Microsoft.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace Umbraco.Docs.Preview.App
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static int Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var directory = Directory.GetCurrentDirectory();
+            if (!File.Exists(Path.Combine(directory, "index.md")))
+            {
+                Console.Error.WriteLine("Fatal Error: current directory doesn't appear to be the UmbracoDocs repo.");
+                return -1;
+            }
+
+            CreateHostBuilder(args)
+                .Build()
+                .Run();
+
+            return 0;
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            // dotnet tools configure cwd as you would expect, but Host.CreateDefaultBuilder isn't expecting that 
+            // to be miles away from appsettings.json and wwwroot etc.
+            // So more config, less convention for ContentRoot
+            var applicationFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+            return Host.CreateDefaultBuilder(args)
+                .UseContentRoot(applicationFolder)
                 .UseLamar()
                 .UseConsoleLifetime()
-                .ConfigureLogging(cfg =>
-                {
-                    cfg.AddConsole();
-                    cfg.AddDebug();
-                    cfg.AddFilter((_, log, level) =>
-                    {
-                        // TODO: move to config somewhere.
-                        if (log.StartsWith("Umbraco") && level >= LogLevel.Debug)
-                            return true;
-                        if (log.StartsWith("Microsoft.Hosting.Lifetime") && level >= LogLevel.Debug)
-                            return true;
-                        return false;
-                    });
-                    cfg.SetMinimumLevel(LogLevel.Warning);
-                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+#if !DEBUG
+                    webBuilder.UseEnvironment("Production");
+#endif
                     webBuilder.UseStartup<Startup>();
                 });
+        }
     }
 }
