@@ -20,9 +20,9 @@ namespace Umbraco.Docs.Preview.App.Extensions
                 .GetRequiredService<ILoggerFactory>()
                 .CreateLogger(typeof(UmbracoDocsApplicationBuilderExtensions));
 
-            log.LogWarning("Images from new documentation sub directories will not be served without a restart");
-
             AddImageFileProviders(tree, app, log);
+
+            log.LogWarning("Images from new documentation sub directories will not be served without a restart");
 
             return app;
         }
