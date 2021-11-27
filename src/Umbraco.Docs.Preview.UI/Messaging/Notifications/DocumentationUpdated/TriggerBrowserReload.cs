@@ -23,7 +23,7 @@ namespace Umbraco.Docs.Preview.UI.Messaging.Notifications.DocumentationUpdated
             DocsUpdated notification, 
             CancellationToken cancellationToken)
         {
-            _log.LogInformation("Documentation updated, triggering UI reload (TODO:).");
+            _log.LogInformation("Documentation updated, triggering UI reload.");
             _notifier.PublishChangeNotifications();
             return Task.CompletedTask;
         }
