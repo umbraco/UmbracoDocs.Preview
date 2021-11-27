@@ -9,7 +9,7 @@
 
     <script type="text/javascript" src="/scripts/jquery-1.9.1.min.js"></script>
     <link href="/assets/css/style.min.css?cdv=645815128" type="text/css" rel="stylesheet" />
-    
+
     <title>UmbracoDocs Preview</title>
 </head>
 
@@ -40,7 +40,7 @@
             <div class="container is-narrow-tablet">
                 <div class="row">
                     <div class="col-xs-12">
-                        
+
                     </div>
                 </div>
             </div>
@@ -52,6 +52,27 @@
     <script src="/assets/js/lodash.min.js?cdv=645815128" type="text/javascript"></script>
     <script src="/assets/js/community.js?cdv=645815128" type="text/javascript"></script>
     <script src="/assets/js/app.min.js?cdv=645815128" type="text/javascript"></script>
+
+    <script>
+        async function longPollForReload() {
+            const response = await fetch("/documentation/should-reload");
+
+            if (response.status === 200) {
+                console.info('Documentation updated, reloading page.');
+                location.reload();
+            } else {
+                console.info('No changes, continuing to poll.');
+                await longPollForReload();
+            }
+        }
+
+        async function initialize() {
+            console.info('Starting to long poll for updated documentation files..');
+            await longPollForReload();
+        }
+
+        initialize();
+    </script>
 
 </body>
 </html>

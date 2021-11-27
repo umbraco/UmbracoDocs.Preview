@@ -2,9 +2,10 @@
 .vscode/
 .vs/
 
-node_modules/
+dist/
 
 bin/
 obj/
+
 
 *.user
