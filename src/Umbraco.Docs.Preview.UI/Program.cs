@@ -18,8 +18,18 @@ namespace Umbraco.Docs.Preview.UI
                 .UseConsoleLifetime()
                 .ConfigureLogging(cfg =>
                 {
+                    cfg.AddConsole();
+                    cfg.AddDebug();
+                    cfg.AddFilter((_, log, level) =>
+                    {
+                        // TODO: move to config somewhere.
+                        if (log.StartsWith("Umbraco") && level >= LogLevel.Debug)
+                            return true;
+                        if (log.StartsWith("Microsoft.Hosting.Lifetime") && level >= LogLevel.Debug)
+                            return true;
+                        return false;
+                    });
                     cfg.SetMinimumLevel(LogLevel.Warning);
-                    cfg.AddFilter((_, log, level) => log.StartsWith("Umbraco") && level >= LogLevel.Debug);
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
