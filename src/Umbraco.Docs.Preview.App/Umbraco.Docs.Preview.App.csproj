@@ -7,7 +7,12 @@
     <PropertyGroup>
         <Version>0.1.1</Version>
         <Company>Umbraco HQ</Company>
+        <Description>Enables local preview of UmbracoDocs.</Description>
+        <PackageTags>umbraco</PackageTags>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageIcon>logo-small.png</PackageIcon>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/umbraco/UmbracoDocs.Preview/</RepositoryUrl>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -22,6 +27,10 @@
         <PackageReference Include="Markdig" Version="0.26.0" />
         <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
         <!--<PackageReference Include="Markdig.SyntaxHighlighting" Version="1.1.7" />--> <!--Windows only-->
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="logo-small.png" Pack="true"  PackagePath="\"/>
     </ItemGroup>
 
 </Project>
