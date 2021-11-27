@@ -11,8 +11,17 @@ setting up our.umbraco.
 Be warned this project is somewhat experimental and definitely has some limitations, it's unlikely to ever gain any
 sort of official support as the documentation platform is scheduled for a refresh.
 
-## Installing from nuget
-TODO: this
+Until 1.0.0 everything is subject to change and it's highly likely there will never be a 1.0.0 release.
+
+## Installing from nuget.org
+
+This project can be found on nuget at https://www.nuget.org/packages/Umbraco.Docs.Preview.App/
+
+You can run the following to install as a global tool.
+
+```bash
+$ dotnet tool install --global Umbraco.Docs.Preview.App --version 0.1.0-beta
+```
 
 ## install local build
 
