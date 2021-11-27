@@ -23,22 +23,10 @@ You can run the following to install as a global tool.
 $ dotnet tool install --global Umbraco.Docs.Preview.App --version 0.1.0-beta
 ```
 
-## install local build
-
-```bash
-$ dotnet pack -o dist
-$ dotnet tool install -g --add-source ./dist --version 0.1.0-beta Umbraco.Docs.Preview.App
-```
-
 ## Running the project
 
 ```bash
 $ umbracodocs # run from UmbracoDocs repo root
-```
-
-## I don't want this anymore
-```bash
-$ dotnet tool uninstall -g umbraco.docs.preview.app
 ```
 
 And you're ready to view the docs by default at http://localhost:5000.
@@ -47,3 +35,16 @@ When you update a markdown document your browser will automatically reload.
 
 This could be useful for testing contributions to UmbracoDocs or just to facilitate reading the docs without an internet
 connection.
+
+
+## install local build
+
+```bash
+$ dotnet pack -o dist
+$ dotnet tool install -g --add-source ./dist --version 0.1.0-beta Umbraco.Docs.Preview.App
+```
+
+## I don't want this anymore
+```bash
+$ dotnet tool uninstall -g umbraco.docs.preview.app
+```
