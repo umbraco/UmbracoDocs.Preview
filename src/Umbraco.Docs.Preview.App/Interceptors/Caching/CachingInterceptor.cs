@@ -27,12 +27,12 @@ namespace Umbraco.Docs.Preview.App.Interceptors.Caching
 
             if (_cache.TryGetValue(attribute.CacheKey, out var value))
             {
-                _log.LogDebug("Cache hit for {info}", invocation.Method);
+                _log.LogDebug("Cache hit for {info}", $"{invocation.Method.DeclaringType!.FullName}{invocation.Method.Name}");
                 invocation.ReturnValue = value;
                 return;
             }
 
-            _log.LogDebug("Cache miss for {info}", invocation.Method);
+            _log.LogDebug("Cache miss for {info}", $"{invocation.Method.DeclaringType!.FullName}{invocation.Method.Name}");
             invocation.Proceed();
             _cache.Set(attribute.CacheKey, invocation.ReturnValue);
         }
