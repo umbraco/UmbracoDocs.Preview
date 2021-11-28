@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>0.1.1</Version>
+        <Version>0.1.2</Version>
         <Company>Umbraco HQ</Company>
         <Description>Enables local preview of UmbracoDocs.</Description>
         <PackageTags>umbraco</PackageTags>
@@ -26,11 +26,12 @@
         <PackageReference Include="Lamar.Microsoft.DependencyInjection" Version="6.0.0" />
         <PackageReference Include="Markdig" Version="0.26.0" />
         <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+        <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.21308.1" />
         <!--<PackageReference Include="Markdig.SyntaxHighlighting" Version="1.1.7" />--> <!--Windows only-->
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="logo-small.png" Pack="true"  PackagePath="\"/>
+        <None Include="logo-small.png" Pack="true" PackagePath="\" />
     </ItemGroup>
 
 </Project>
