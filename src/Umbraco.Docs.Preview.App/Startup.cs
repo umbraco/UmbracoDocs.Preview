@@ -1,4 +1,3 @@
-using System.IO;
 using Castle.DynamicProxy;
 using Lamar;
 using MediatR;
@@ -11,7 +10,6 @@ using Umbraco.Docs.Preview.App.Extensions;
 using Umbraco.Docs.Preview.App.HostedServices;
 using Umbraco.Docs.Preview.App.Interceptors.Caching;
 using Umbraco.Docs.Preview.App.MiscellaneousOurStuff;
-using Umbraco.Docs.Preview.App.Options;
 using Umbraco.Docs.Preview.App.Services;
 
 namespace Umbraco.Docs.Preview.App
@@ -26,7 +24,6 @@ namespace Umbraco.Docs.Preview.App
 
             services.AddSingleton<IMarkdownService, MarkdownService>();
             services.AddSingleton<DocumentationUpdater>();
-            services.Configure<UmbracoDocsOptions>(cfg => cfg.UmbracoDocsRootFolder = Directory.GetCurrentDirectory());
 
             services.For<IDocumentService>()
                 .Add<DocumentService>()

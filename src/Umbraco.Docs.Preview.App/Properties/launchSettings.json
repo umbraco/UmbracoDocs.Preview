@@ -1,7 +1,7 @@
 ﻿{
   "profiles": {
     "Development": {
-      "workingDirectory": "../../../UmbracoDocs/",
+      "commandLineArgs": "../../../UmbracoDocs/",
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,

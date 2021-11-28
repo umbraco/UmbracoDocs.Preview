@@ -27,6 +27,7 @@ $ dotnet tool install --global Umbraco.Docs.Preview.App
 
 ```bash
 $ umbracodocs # run from UmbracoDocs repo root
+$ umbracodocs -h # view help.
 ```
 
 And you're ready to view the docs by default at http://localhost:5000.
