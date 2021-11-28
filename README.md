@@ -26,7 +26,7 @@ $ dotnet tool install --global Umbraco.Docs.Preview.App
 ## Running the project
 
 ```bash
-$ umbracodocs # run from UmbracoDocs repo root
+$ umbracodocs # from UmbracoDocs repository
 $ umbracodocs -h # view help.
 ```
 

@@ -56,7 +56,7 @@ namespace Umbraco.Docs.Preview.App
 
             app.UseStatusCodePages();
 
-            app.UseUmbracoDocsImageFileProviders();
+            app.UseUmbracoDocsStaticFiles();
 
             app.UseStaticFiles();
 

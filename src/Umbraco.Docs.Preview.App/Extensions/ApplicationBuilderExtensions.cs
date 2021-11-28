@@ -6,9 +6,9 @@ using Umbraco.Docs.Preview.App.Options;
 
 namespace Umbraco.Docs.Preview.App.Extensions
 {
-    public static class UmbracoDocsApplicationBuilderExtensions
+    public static class ApplicationBuilderExtensions
     {
-        public static IApplicationBuilder UseUmbracoDocsImageFileProviders(this IApplicationBuilder app)
+        public static IApplicationBuilder UseUmbracoDocsStaticFiles(this IApplicationBuilder app)
         {
             var settings = app.ApplicationServices.GetRequiredService<IOptions<UmbracoDocsOptions>>();
 
