@@ -30,6 +30,8 @@ namespace Umbraco.Docs.Preview.App.Services
                 return File.Exists(version.FileSystemPath);
             }
 
+            slug = slug.UnderscoreToDot();
+
             var slugParts = slug.Split("/")
                 .Where(x => !string.IsNullOrEmpty(x))
                 .ToArray();

@@ -45,12 +45,7 @@ namespace Umbraco.Docs.Preview.App.Services
                 //.UseSyntaxHighlighting() 
                 .Build();
 
-            var transform = Markdown.ToHtml(clean, pipeline);
-
-            // HACK: fix html img element paths, e.g. on Getting-Started page, could be pipeline extension.
-            transform = transform.Replace("src=\"images/", $"src=\"{version.FolderRelativeUrl}images/".RemoveEmptyFolderParts());
-
-            return transform;
+            return Markdown.ToHtml(clean, pipeline);
         }
 
         private string LinkEvaluator(Match match, DocumentVersion version)
@@ -69,18 +64,8 @@ namespace Umbraco.Docs.Preview.App.Services
 
             //Correct internal image links
             if (rawUrl.StartsWith("../images/"))
-                return mdUrlTag.Replace("../images/", $"{version.FolderRelativeUrl}images/".RemoveEmptyFolderParts());
+                return mdUrlTag.Replace("../images/", "images/");
 
-            if (rawUrl.StartsWith("images/"))
-            {
-                return mdUrlTag.Replace("images/", $"{version.FolderRelativeUrl}images/".RemoveEmptyFolderParts());
-            }
-
-            if (!rawUrl.StartsWith("/"))
-            {
-                var relativeUrl = $"{version.FolderRelativeUrl}{rawUrl}".RemoveEmptyFolderParts();
-                mdUrlTag = $"[{linkText}]({rawUrl.Replace(rawUrl, relativeUrl)})";
-            }
 
             if (rawUrl.EndsWith("index.md"))
                 mdUrlTag = mdUrlTag.Replace("/index.md", "/");

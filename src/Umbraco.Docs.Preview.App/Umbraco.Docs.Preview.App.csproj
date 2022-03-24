@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>0.1.3</Version>
+        <Version>0.1.4</Version>
         <Company>Umbraco HQ</Company>
         <Description>Enables local preview of UmbracoDocs.</Description>
         <PackageTags>umbraco</PackageTags>
