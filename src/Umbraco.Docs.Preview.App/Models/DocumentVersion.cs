@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Umbraco.Docs.Preview.App.Extensions;
+using Umbraco.Docs.Preview.App.MiscellaneousOurStuff;
 
 namespace Umbraco.Docs.Preview.App.Models
 {
@@ -16,7 +17,7 @@ namespace Umbraco.Docs.Preview.App.Models
         public string FileName => Path.GetFileName(FileSystemPath);
         public string FileNameWithoutExtension => Path.GetFileNameWithoutExtension(FileSystemPath);
         public bool IsAlternate => FileName.Contains("v-pre") || Regex.IsMatch(FileName, @"-v\d+");
-        public string Url => IsAlternate ? $"{FolderRelativeUrl}{FileNameWithoutExtension}" : FolderRelativeUrl;
+        public string Url => IsAlternate ? $"{FolderRelativeUrl}{FileNameWithoutExtension}".EnsureNoDotsInUrl() : FolderRelativeUrl.EnsureNoDotsInUrl();
 
 
         public DocumentVersion(string root, string filename, params string[] parts)

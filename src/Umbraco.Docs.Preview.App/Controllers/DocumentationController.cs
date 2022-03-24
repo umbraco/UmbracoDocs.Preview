@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Umbraco.Docs.Preview.App.Models;
@@ -36,14 +37,14 @@ namespace Umbraco.Docs.Preview.App.Controllers
         [HttpGet("{**slug}")]
         public IActionResult Index(string slug)
         {
-            if (!$"{Request.Path}".EndsWith("/"))
-            {
-                return RedirectPermanent($"{Request.Path}/");
-            }
-
             if (!_docs.TryFindMarkdownFile(slug, out var version))
             {
                 return NotFound();
+            }
+
+            if (ShouldRedirect(version, out var path))
+            {
+                return RedirectPermanent(path);
             }
 
             var model = new DocumentationViewModel
@@ -55,6 +56,31 @@ namespace Umbraco.Docs.Preview.App.Controllers
             };
 
             return View("DocumentationSubpage", model);
+        }
+
+        private bool ShouldRedirect(DocumentVersion version, out string url)
+        {
+            if (version.IsAlternate && $"{Request.Path}".EndsWith('/'))
+            {
+                url = $"{Request.Path}".TrimEnd('/');
+                return true;
+            }
+
+            if (version.FileName.Equals("index.md") && !$"{Request.Path}".EndsWith("/"))
+            {
+                url = $"{Request.Path}/";
+                return true;
+            }
+
+            var match = Regex.Match(Request.Path, $"(.*)index/?$");
+            if(match.Success)
+            {
+                url = match.Groups[1].Value;
+                return true;
+            }
+
+            url = null;
+            return false;
         }
 
     }
